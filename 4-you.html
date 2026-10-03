@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Fredoka',sans-serif}
+body{height:100vh;overflow:hidden;background:#fff0f5;display:flex;align-items:center;justify-content:center}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1}
+.card{position:relative;z-index:2;background:white;border:4px solid #ffb6d9;border-radius:30px;padding:40px 30px;width:90%;max-width:380px;text-align:center;box-shadow:0 10px 40px #ffb6d9aa}
+.badge{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:white;border:3px solid #ffb6d9;border-radius:20px;padding:5px 20px;color:#ff7eb3}
+.cat{font-size:70px;animation: bounce 1s infinite alternate}
+@keyframes bounce{to{transform:translateY(-8px)}}
+h1{color:#d14a7b;margin:15px 0 5px;font-size:28px}
+p{color:#e38aaa;font-size:15px;margin-bottom:25px}
+.btns{display:flex;gap:12px;justify-content:center}
+button{flex:1;padding:14px;border-radius:50px;border:3px solid #ffb6d9;font-size:18px;font-weight:600;cursor:pointer;transition:.2s}
+#yes{background:#ff8cba;color:white}
+#yes:hover{transform:scale(1.05);box-shadow:0 0 20px #ff8cba}
+#no{background:white;color:#ff8cba;position:relative}
+.heart{position:fixed;pointer-events:none;animation: fall linear forwards;z-index:3}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div class="card" id="card">
+<div class="badge">♡ for you ♡</div>
+<div class="cat">😺🎀</div>
+<h1>Will you be my girlfriend?</h1>
+<p>I've liked you for a long time...<br>will you say yes? ♡</p>
+<div class="btns">
+<button id="yes">♡ Yes!</button>
+<button id="no">No</button>
+</div>
+</div>
+
+<script>
+// MATRIX PINK
+const c=document.getElementById("matrix"),ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+const cols=Math.floor(c.width/16),y=[...Array(cols)].map(()=>Math.random()*c.height);
+setInterval(()=>{
+ctx.fillStyle="#fff0f52a";ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle="#7ec99a";ctx.font="14px monospace";
+y.forEach((yy,i)=>{
+ctx.fillText(Math.random()>0.5?"1":"0",i*16,yy);
+if(yy>c.height+Math.random()*1000)y[i]=0;else y[i]=yy+16;
+});
+},60);
+
+// tombol No kabur
+const no=document.getElementById("no"),yes=document.getElementById("yes");
+no.addEventListener("mouseover",()=>{
+no.style.position="fixed";
+no.style.left=Math.random()*80+"%";
+no.style.top=Math.random()*80+"%";
+});
+no.addEventListener("touchstart",e=>{
+e.preventDefault();
+no.style.position="fixed";
+no.style.left=Math.random()*80+"%";
+no.style.top=Math.random()*80+"%";
+});
+
+// tombol Yes hujan hati
+yes.addEventListener("click",()=>{
+document.getElementById("card").innerHTML=`<div class="cat">😻💖</div><h1>YAAAY DITERIMA!</h1><p>akhirnyaa diterimaaa, kamuu senengg gakk?? ♡</p>`;
+setInterval(()=>{
+const h=document.createElement("div");h.className="heart";
+h.innerHTML=["💖","💕","💗","🌸","✨"][Math.floor(Math.random()*5)];
+h.style.left=Math.random()*100+"vw";h.style.top="-20px";
+h.style.fontSize=20+Math.random()*20+"px";
+h.style.animationDuration=2+Math.random()*3+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),4000);
+},80);
+});
+window.onresize=()=>{c.width=innerWidth;c.height=innerHeight}
+</script>
+</body>
+</html>
